@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Marks Card</title>
+  <style>
+    body {
+      background-image: url('/static/pphoto.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      padding: 0;
+      margin: 0;
+      min-height: 100vh; /* Ensures body takes full height */
+      display: flex;
+      justify-content: flex-start; /* Keep content starting from the top */
+      align-items: flex-start; /* Align items from the top */
+      flex-direction: column;
+      padding-top: 80px; /* Ensure space from top */
+    }
+
+    .marks-card {
+      width: 50%;
+      max-width: 600px;
+      background-color: skyblue;
+      color: black;
+      opacity: 0.9; /* Adjusted for readability */
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      text-align: left;
+      margin: 0 auto; /* Centers the card horizontally */
+      margin-top: 20px; /* Ensures a fixed gap from the top */
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+      color: brown;
+    }
+
+    .student-info {
+      margin-bottom: 20px;
+    }
+
+    .subject {
+      font-weight: bold;
+    }
+
+    .marks-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    .marks-table th,
+    .marks-table td {
+      padding: 8px;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+
+    .total {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="marks-card">
+    <div class="header">
+      <h1>Student Marks Card</h1>
+    </div>
+    
+    <div class="student-info">
+      {% if student %}
+        <p>Name: {{ student.Name }}</p>
+        <p>Register number: {{ student.Reg_number }}</p>
+        <p>Course: {{ student.Course }}</p>
+        <p>Semester: {{ student.Semester }}</p>
+      {% else %}
+        <p>No student information found.</p>
+      {% endif %}
+    </div>
+
+    {% if marks %}
+    <table class="marks-table">
+      <thead>
+        <tr>
+          <th>Subject</th>
+          <th>Marks Obtained</th>
+          <th>Total Marks</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for mark in marks %}
+        <tr>
+          <td>{{ mark.subject }}</td>
+          <td>{{ mark.obtained }}</td>
+          <td>100</td> <!-- Assuming total marks per subject is always 100 -->
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr class="total">
+          <td>Total Marks:</td>
+          <td>{{ total_marks }}</td>
+          <td>{{ max_marks }}</td>
+        </tr>
+        <tr>
+          <td colspan="3">Percentage: {{ percentage }}%</td>
+        </tr>
+        <tr>
+          <td colspan="3">Result: {{ result }}</td>
+        </tr>
+      </tfoot>
+    </table>
+    {% else %}
+      <p>{{ no_marks_message }}</p>
+    {% endif %}
+  </div>
+</body>
+</html>

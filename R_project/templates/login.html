@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Login</title>
+    <style>
+        body {
+            background-image: url('/static/SJCE_CImage.png'), url('/static/SJCE_Logo.png');
+            background-position: center center, top right;
+            background-repeat: no-repeat, no-repeat;
+            background-size: cover, 150px 150px;
+            background-attachment: fixed, scroll;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #111;
+            border: 5px solid #333;
+        }
+        #login {
+            background-color: white;
+            border-radius: .25em;
+            opacity: 0.9;
+            padding: 40px;
+            margin: 200px auto;
+            width: 400px;
+            border: 10px solid #333;
+            text-align: center;
+        }
+        .login-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        .login-header img {
+            width: 30px;
+            height: 30px;
+        }
+        .login-header h1{
+            color: #111;
+        }
+        input[type="text"], input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+        }
+        input[type="submit"] {
+            background-color: #111;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #555;
+        }
+        .flash-messages {
+            color: #ee0d0d;
+            padding: 5px;
+            list-style-type: none;
+            text-align: center;
+            margin: 10px auto;
+            width: 80%;
+        }
+        .flash-messages li {
+            list-style-type: none;
+            padding: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <section id="login">
+        <div class="login-header">
+            <img src="/static/login_icon.png" alt="Login Icon"> <!-- Replace with your icon path -->
+            <h1>Admin Login</h1>
+        </div>
+        <form method="POST" action="{{ url_for('login') }}">
+            <input type="text" name="un" placeholder="User Id" required>
+            <input type="password" name="pw" placeholder="Password" required>
+            <input type="submit" value="Login">
+        </form>
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flash-messages">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </section>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Home</title>
+  <style>
+    body {
+      background-image: url('/static/SJCE_CImage.png'), url('/static/SJCE_Logo.png');
+      background-position: center center, top right;
+      background-repeat: no-repeat, no-repeat;
+      background-size: cover, 150px 150px;
+      background-attachment: fixed, scroll;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #111;
+      border: 5px solid #333;
+    }
+    header {
+      background: #222;
+      color: #fff;
+      opacity: 0.9;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 { margin: 0; font-size: 28px; }
+    #login {
+      background-color: white;
+      padding: 40px;
+      margin: 200px auto;
+      opacity: 0.8;
+      width: 400px;
+      box-shadow: 10px 10px 10px rgba(1, 1, 1, 1);
+      border: 10px solid #333;
+      text-align: center;
+    }
+    .login-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .login-header img {
+      width: 30px;
+      height: 30px;
+    }
+    .login-header h2 {
+      font-size: 24px;
+      margin: 0;
+      padding: 0;
+    }
+    h2 { margin-top: 0; font-size: 24px; }
+    input[type="text"], input[type="password"] {
+      width: 80%; padding: 10px; margin-bottom: 20px; border: 1px solid #333;
+    }
+    input[type="submit"] {
+      background-color: #111; color: #fff; border: none; padding: 10px 20px; cursor: pointer;
+    }
+    input[type="submit"]:hover {
+      background-color: #555; transform: translateY(4px); box-shadow: 0 2px 4px rgba(2, 2, 2, 2);
+    }
+    .flash {
+      margin: 20px 0;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+    }
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .danger {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome to the Examination Management System</h1>
+  </header>
+  <section id="login">
+    <!-- Login Header with Icon -->
+    <div class="login-header">
+      <img src="/static/login_icon.png" alt="Login Icon"> <!-- Replace with your icon path -->
+      <h2>Student Login</h2>
+    </div>
+
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    
+    <form method="POST" action="/student_login">
+      <input type="text" placeholder="Name" name="n" required><br>
+      <input type="text" placeholder="Register Number" name="rn" required><br>
+      <input type="submit" value="Login">
+    </form>
+  </section>
+</body>
+</html>

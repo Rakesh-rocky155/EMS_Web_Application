@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Application</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='fmstyle.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Other content here -->
+        
+        <!-- Flash Messages Section -->
+        <div id="flash-messages" style="display: none;">
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        
+        <!-- Your page content -->
+        {% block content %}{% endblock %}
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Show flash messages if present
+            if ($('#flash-messages').children().length > 0) {
+                $('#flash-messages').fadeIn(200).delay(3000).fadeOut(200);
+            }
+        });
+    </script>
+</body>
+</html>

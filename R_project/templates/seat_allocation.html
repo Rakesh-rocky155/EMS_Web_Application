@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Seat Allocation</title>
+    <style>
+        body {
+            background-image: url('/static/pphoto1.png');
+            background-repeat: no-repeat;
+            background-size: 100%;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        input[type="button"] {
+            background-color: #111;
+            width: auto;
+            min-width: 130px;
+            height: 30px;
+            color: aqua;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="button"]:hover {
+            background-color: #444;
+        }
+        table, th, td {
+            background-color: #111;
+            opacity: 0.95;
+            border: 0.5px solid black;
+            border-collapse: collapse;
+        }
+        th {
+            color: #fff;
+            padding: 10px;
+        }
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+        #invalid {
+            background-color: #777;
+            color: transparent;
+        }
+        a {
+            font-size: 30px;
+            color: #fff;
+        }
+        table {
+            margin: auto;
+        }
+        .message {
+            color: red;
+            font-size: 20px;
+        }
+        .seat-number {
+            font-size: 12px;
+            color: white;
+        }
+        #empty {
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="color: black; line-height: 3.5em; margin-top: 50px;">Exam Seat Allocation</h1>
+    <h2 style="color: black; line-height: 0.1em;">Your Registration Number: {{ reg_number }} and Classroom: {{ classroom_number }}</h2> <!-- Display the registration number -->
+
+    {% if not allocation_exists %}
+        <div class="message">No seat allocation found for your registration number.</div>
+    {% else %}
+        <center>
+        <table>
+            <!-- Column headers for rows -->
+            <tr>
+                <th>Row 1</th>
+                <th>Row 2</th>
+                <th>Row 3</th>
+            </tr>
+
+            <tr>
+                <!-- Row 1 -->
+                <td>
+                    <table>
+                        {% for i in range(0, 20, 2) %}
+                        <tr>
+                            <td>
+                                {% if seat_allocation[i] == reg_number %}
+                                    <input type="button" value="{{ seat_allocation[i] }}">
+                                {% else %}
+                                    <input id="invalid" type="button" value="x">
+                                {% endif %}
+                                <div class="seat-number">{{ i + 1 }}</div>
+                            </td>
+                            <td><input type="button" id="empty" value=""></td> <!-- Empty Seat -->
+                            <td>
+                                {% if seat_allocation[i + 1] == reg_number %}
+                                    <input type="button" value="{{ seat_allocation[i + 1] }}">
+                                {% else %}
+                                    <input id="invalid" type="button" value="x">
+                                {% endif %}
+                                <div class="seat-number">{{ i + 2 }}</div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+
+                <!-- Row 2 -->
+                <td>
+                    <table>
+                        {% for i in range(20, 40, 2) %}
+                        <tr>
+                            <td>
+                                {% if seat_allocation[i] == reg_number %}
+                                    <input type="button" value="{{ seat_allocation[i] }}">
+                                {% else %}
+                                    <input id="invalid" type="button" value="x">
+                                {% endif %}
+                                <div class="seat-number">{{ i + 1 }}</div>
+                            </td>
+                            <td><input type="button" id="empty" value=""></td> <!-- Empty Seat -->
+                            <td>
+                                {% if seat_allocation[i + 1] == reg_number %}
+                                    <input type="button" value="{{ seat_allocation[i + 1] }}">
+                                {% else %}
+                                    <input id="invalid" type="button" value="x">
+                                {% endif %}
+                                <div class="seat-number">{{ i + 2 }}</div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+
+                <!-- Row 3 -->
+                <td>
+                    <table>
+                        {% for i in range(40, 60, 2) %}
+                        <tr>
+                            <td>
+                                {% if seat_allocation[i] == reg_number %}
+                                    <input type="button" value="{{ seat_allocation[i] }}">
+                                {% else %}
+                                    <input id="invalid" type="button" value="x">
+                                {% endif %}
+                                <div class="seat-number">{{ i + 1 }}</div>
+                            </td>
+                            <td><input type="button" id="empty" value=""></td> <!-- Empty Seat -->
+                            <td>
+                                {% if seat_allocation[i + 1] == reg_number %}
+                                    <input type="button" value="{{ seat_allocation[i + 1] }}">
+                                {% else %}
+                                    <input id="invalid" type="button" value="x">
+                                {% endif %}
+                                <div class="seat-number">{{ i + 2 }}</div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+            </tr>
+        </table>
+        </center>
+    {% endif %}
+</body>
+</html>

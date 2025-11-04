@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Login</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='adminstyle.css') }}">
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+    <header>
+        <h1>Admin Login</h1>
+    </header>
+    <section id="login">
+        <form method="POST">
+            <input type="text" name="un" placeholder="User Id" required>
+            <input type="password" name="pw" placeholder="Password" required>
+            <input type="submit" value="Login">
+        </form>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </section>
+</body>
+</html>

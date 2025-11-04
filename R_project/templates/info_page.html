@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            background-image: url('/static/images/college.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 0;
+        }
+        .user-info {
+            margin-bottom: 20px;
+        }
+        .redirects {
+            text-align: center;
+        }
+        .redirects a {
+            display: inline-block;
+            opacity: 0.7;
+            margin: 20px;
+            padding: 10px 0px;
+            background-color: #111;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            width: 45%;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="user-info">
+            <h1>Welcome {{ username }}</h1>
+        </div>
+        <div class="redirects">
+            <a href="A_Attendance_Set.html">Set Attendance</a>
+            <a href="A_Attendance_View.php">View Attendance</a>
+            <a href="A_Marks_Set.html">Set Marks</a>
+            <a href="A_Marks_View.php">View Marks</a>
+            <a href="A_Seat_Allocation_Set.html">Allot Examination Seats</a>
+            <a href="A_Seat_Allocation_View.php">View Examination Seats</a>
+            <a href="A_Subjects_Set.html">Set Subjects</a>
+            <a href="A_Fee_Payment_Status.php">Fee Payment Status</a>
+            <a href="A_Exam_Timetable_Set.html">Set Time Table</a>
+            <a href="A_Exam_Timetable_View.php">View Time Table</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+</body>
+</html>

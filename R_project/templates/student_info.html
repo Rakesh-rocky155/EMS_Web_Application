@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Dashboard</title>
+  <style>
+    body {
+      background-image: url('/static/pphoto1.png');
+      background-repeat: no-repeat;
+      background-size: 100%;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: right;
+    }
+    .container {
+      max-width: 800px;
+      margin: 100px auto 0;
+      padding: 20px;
+      border-radius: 5px;
+      background-color: orange;
+      opacity: 0.8;
+      color: #fff;
+      box-shadow: 0 2px 4px rgba(2, 2, 2, 2);
+    }
+    h1 {
+      text-align: center;
+      margin-top: 0;
+      color: black;
+    }
+    h2{
+      color: black;
+    }
+    .user-info {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    .redirects {
+      text-align: center;
+    }
+    .redirects a {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
+      background-color: #550cde; /* Default background color */
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      width: 70%;
+    }
+    .redirects a:hover {
+      box-shadow: 0 2px 4px rgba(2, 2, 2, 2);
+      transform: translateY(4px);
+    }
+    /* Flash messages styling */
+    .flash-messages {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .flash-messages ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+    .flash-messages li {
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      display: inline-block;
+    }
+    /* Red background for Logout button */
+    .redirects a.logout-button {
+      background-color: #f44336 !important; /* Red color with higher specificity */
+    }
+    .redirects a.logout-button:hover {
+      box-shadow: 0 2px 4px rgba(2, 2, 2, 2);
+      transform: translateY(4px);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome {{ student_data['Name'] }}</h1>
+    <!-- Display Flash Messages -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash-messages">
+          <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    {% endwith %}
+    
+    <div class="user-info">
+      <h2>Student Information</h2>
+      <p>Name: {{ student_data['Name'] }}</p>
+      <p>Register number: {{ student_data['Reg_number'] }}</p>
+      <p>Course: {{ student_data['Course'] }}</p>
+      <p>Semester: {{ student_data['Semester'] }} Semester</p>
+    </div>
+    
+    <div class="redirects">
+      <h2>Information</h2>
+      <a href="{{ url_for('attendance') }}">Attendance</a>
+      <a href="{{ url_for('marks') }}">Marks</a>
+      <a href="{{ url_for('seat_allocation') }}">Seat Allocation</a><br>
+      <a href="{{ url_for('exam_timetable') }}">Exam Timetable</a>
+      <!-- Apply red background for Logout button -->
+      <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+    </div>
+  </div>
+</body>
+</html>

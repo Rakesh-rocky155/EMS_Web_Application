@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Display Timetable</title>
+    <style>
+        body {
+            background-image: url('/static/pphoto.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+        }
+
+        .timetable-container {
+            background-color: #111;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 25px 25px rgba(5, 5, 5, 0.5);
+            width: 80%;
+            color: #fff;
+            margin: 0 auto;
+            margin-top: 150px;
+            opacity: 0.95;
+            text-align: center;
+        }
+
+        .timetable-heading {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #4285F4;
+        }
+
+        form {
+            margin-bottom: 30px;
+        }
+
+        select {
+            margin: 0 10px;
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4285F4;
+            color: white;
+        }
+
+        td {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #FF5722;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .clear-button {
+            margin-top: 20px; /* Adds gap between the clear button and other elements */
+            padding: 10px 20px;
+            background-color: #FF5722;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .clear-button:hover {
+            background-color: #E64A19;
+        }
+    </style>
+</head>
+<body>
+    <div class="timetable-container">
+        <h1 class="timetable-heading">Timetable</h1>
+
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="message">
+                    {% for category, message in messages %}
+                        <p class="flash-{{ category }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Timetable form -->
+        <form method="POST" action="{{ url_for('view_timetable') }}">
+            <label for="course">Select Course:</label>
+            <select name="course" id="course" required>
+                <option value="" disabled {{ 'selected' if not course }}>Select Course</option>
+                <option value="bca" {{ 'selected' if course == 'bca' }}>BCA</option>
+                <option value="mca" {{ 'selected' if course == 'mca' }}>MCA</option>
+                <option value="bsc" {{ 'selected' if course == 'bsc' }}>B.Sc</option>
+                <option value="msc" {{ 'selected' if course == 'msc' }}>M.Sc</option>
+                <option value="btech" {{ 'selected' if course == 'btech' }}>B.Tech</option>
+                <option value="mtech" {{ 'selected' if course == 'mtech' }}>M.Tech</option>
+            </select>
+
+            <label for="semester">Select Semester:</label>
+            <select name="sem" id="semester" required>
+                <option value="" disabled {{ 'selected' if not sem }}>Select Semester</option>
+                <option value="1" {{ 'selected' if sem == '1' }}>1</option>
+                <option value="2" {{ 'selected' if sem == '2' }}>2</option>
+                <option value="3" {{ 'selected' if sem == '3' }}>3</option>
+                <option value="4" {{ 'selected' if sem == '4' }}>4</option>
+                <option value="5" {{ 'selected' if sem == '5' }}>5</option>
+                <option value="6" {{ 'selected' if sem == '6' }}>6</option>
+            </select>
+
+            <button type="submit">Show Timetable</button>
+        </form>
+
+        <!-- Timetable display -->
+        {% if timetable_data %}
+            <table>
+                <tr>
+                    <th>Course</th>
+                    <th>Semester</th>
+                    <th>Subject</th>
+                    <th>Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                </tr>
+                {% for row in timetable_data %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+                        <td>{{ row[3] }}</td>
+                        <td>{{ row[4] }}</td>
+                        <td>{{ row[5] }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+
+        <!-- Form to clear the timetable -->
+        {% if timetable_data %}
+        <form action="{{ url_for('clears_timetable') }}" method="POST">
+            <input type="hidden" name="course" value="{{ timetable_data[0][0] }}">
+            <input type="hidden" name="sem" value="{{ timetable_data[0][1] }}">
+            <button type="submit" class="clear-button">Clear Timetable</button>
+        </form>
+        {% endif %}
+
+        <!-- Home link -->
+        <a href="/dashboard">HOME</a>
+    </div>
+</body>
+</html>

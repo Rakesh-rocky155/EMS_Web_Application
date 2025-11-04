@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Subjects</title>
+    <style>
+        body {
+            background-image: url('/static/pphoto.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+        }
+        .input-container {
+            background-color: #111;
+            color: #fff;
+            padding: 20px;
+            margin: 0 auto;
+            margin-top: 100px;
+            border-radius: 5px;
+            width: 400px;
+        }
+        input, button {
+            width: 99%;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 5px 0;
+        }
+        button {
+            background-color: #4285F4;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #3367D6;
+        }
+        .flash {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="input-container">
+        <h1>Clear Course Subjects</h1>
+        
+        <!-- Display flash messages -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <p>Select an option below:</p>
+        
+        <!-- Button for clearing all subjects -->
+        <form method="POST" action="{{ url_for('clears_all_subjects') }}">
+            <button type="submit">Clear All Subjects</button>
+        </form>
+        
+        <!-- Button for clearing a specific subject -->
+        <form method="POST" action="{{ url_for('clears_specific_subject') }}">
+            <label for="course">Enter Course Name:</label>
+            <input type="text" id="course" name="course" required>
+            <label for="course">Enter Semister:</label>
+            <input type="text" id="course" name="sem" required>
+            <label for="subject">Enter Subject Name:</label>
+            <input type="text" id="subject" name="subject" required>
+            <button type="submit">Clear Specific Subject</button>
+        </form>
+
+        <!-- Button for clearing subjects for a specific branch -->
+        <form method="POST" action="{{ url_for('clears_branch_subjects') }}">
+            <label for="branch">Enter Branch Name:</label>
+            <input type="text" id="branch" name="branch" required>
+            <label for="course">Enter Semister:</label>
+            <input type="text" id="course" name="sem" required>
+            <button type="submit">Clear Branch Subjects</button>
+        </form>
+    </div>
+</body>
+</html>

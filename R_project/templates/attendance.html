@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Attendance</title>
+  <style>
+    body {
+      background-image: url('/static/pphoto.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      max-width: 600px;
+      opacity: 0.9;
+      margin: 100px auto;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: purple;
+      color: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      font-size: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-top: 0;
+    }
+    .attendance-info {
+      margin: 20px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+    .status-eligible {
+      color: #4CAF50;
+    }
+    .status-fine {
+      color: #FFA500;
+    }
+    .status-not-eligible {
+      color: #FF0000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Student Attendance</h1>
+    <div class="attendance-info">
+      {% if attendance_records %}  <!-- Check if attendance records exist -->
+        <table>
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Classes Attended</th>
+              <th>Total Classes</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for record in attendance_records %}
+              <tr>
+                <td>{{ record.subject }}</td>
+                <td>{{ record.attended }}</td>
+                <td>{{ record.total }}</td>
+                <td>
+                  {% if record.status == 'eligible' %}
+                    <span class="status-eligible">Eligible for Exam</span>
+                  {% elif record.status == 'fine' %}
+                    <span class="status-fine">Fine Required (Rs 2000)</span>
+                  {% else %}
+                    <span class="status-not-eligible">Not Eligible</span>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}  <!-- If no attendance records are found, show this message -->
+        <p>No attendance records found for your register number.</p>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>

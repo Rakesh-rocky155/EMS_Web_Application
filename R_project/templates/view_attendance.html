@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='view_attendance_style.css') }}">
+    <title>View Student Attendance</title>
+</head>
+<body>
+    <div class="attendance-container">
+        <h1 class="teacher-attendance-heading center">Student Attendance</h1>
+
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Subject Input Form for Viewing Attendance -->
+        <form method="POST" action="{{ url_for('handle_view_attendance') }}">
+            <label for="subject">Enter Subject:</label>
+            <input type="text" name="subject" id="subject" placeholder="Type subject name" required>
+            <input type="submit" value="View Attendance">
+        </form>
+
+        <!-- Attendance Table and Clear Records Button (Displayed Only If Records Are Found) -->
+        {% if attendance_records %}
+            <table>
+                <tr>
+                    <th>Student Registration Number</th>
+                    <th>Student Name</th>
+                    <th>Subject</th>
+                    <th>Classes Attended</th>
+                    <th>Total Classes</th>
+                    <th>Actions</th>
+                </tr>
+                {% for record in attendance_records %}
+                    <tr>
+                        <td>{{ record[0] }}</td>
+                        <td>{{ record[1] }}</td>
+                        <td>{{ record[2] }}</td>
+                        <td>{{ record[3] }}</td>
+                        <td>{{ record[4] }}</td>
+                        <td>
+                            <form method="POST" action="/delete_record">
+                                <input type="hidden" name="student_Reg_No" value="{{ record[0] }}">
+                                <input type="hidden" name="subject" value="{{ record[2] }}">
+                                <input type="submit" value="Delete">
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+            <!-- Clear Records Form Using Subject From the Viewing Form -->
+            <form method="POST" action="/clear_records" class="clear-records-form">
+                <input type="hidden" name="subject" value="{{ subject }}">
+                <input type="submit" value="Clear All Records">
+            </form>
+        {% else %}
+            <p>No attendance records found for the subject {{ subject }}.</p>
+        {% endif %}
+
+        <a href="{{ url_for('dashboard') }}" class="home-link">HOME</a>
+    </div>
+</body>
+</html>

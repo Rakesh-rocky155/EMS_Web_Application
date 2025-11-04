@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Display Marks</title>
+    <style>
+        body {
+            background-image: url('/static/pphoto1.png');
+            background-repeat: no-repeat;
+            background-size: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .marks-container {
+            background-color: #111;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 25px 25px rgba(5, 5, 5, 0.5);
+            width: 80%;
+            color: #fff;
+            margin: 0 auto;
+            margin-top: 150px;
+            opacity: 0.9;
+            text-align: center;
+        }
+
+        .marks-heading {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #4285F4;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 5px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4285F4;
+            color: white;
+        }
+
+        .clear-button, .submit-button {
+            margin-top: 10px;
+            padding: 5px;
+            background-color: #ff4c4c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .clear-button:hover, .submit-button:hover {
+            background-color: #ff1c1c;
+        }
+
+        .message {
+            margin-top: 20px;
+            color: #32CD32;
+        }
+
+        .home-link {
+            text-align: center;
+            padding: 20px;
+        }
+
+        a {
+            color: #34A853;
+            text-decoration: none;
+            margin-top: 0;
+            display: inline-block;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .no-records {
+            color: #ff4c4c;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="marks-container">
+        <h1 class="marks-heading">Marks Sheet</h1>
+
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="message">
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('handle_view_marks') }}">
+            <label for="subject">Enter Subject:</label>
+            <input type="text" name="subject" id="subject" placeholder="Type subject name" required>
+            <button type="submit" class="submit-button">View Marks</button>
+        </form>
+
+        {% if marks_sheet %}
+        <table>
+            <tr>
+                <th>Register Number</th>
+                <th>Subject</th>
+                <th>CIE 1</th>
+                <th>CIE 2</th>
+                <th>Event</th>
+                <th>SEE</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+            {% for row in marks_sheet %}
+            <tr>
+                <td>{{ row.Reg_number }}</td>
+                <td>{{ row.subject }}</td>
+                <td>{{ row.CIE_1 }}</td>
+                <td>{{ row.CIE_2 }}</td>
+                <td>{{ row.Event }}</td>
+                <td>{{ row.SEE }}</td>
+                <td>{{ row.Total }}</td>
+                <td>
+                    <form action="{{ url_for('handle_clear_particular_marks') }}" method="POST">
+                        <input type="hidden" name="Reg_number" value="{{ row.Reg_number }}">
+                        <input type="hidden" name="subject" value="{{ row.subject }}">
+                        <button type="submit" class="clear-button">Clear</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <!-- Clear All Marks Button -->
+        <form action="{{ url_for('handle_clear_marks') }}" method="POST">
+            <input type="hidden" name="subject" value="{{ marks_sheet[0].subject }}"> <!-- Use the subject from the first record in marks_sheet -->
+            <button type="submit" class="clear-button">Clear All Marks</button>
+        </form>
+
+        {% else %}
+        <p class="no-records">No records found for the subject {{ subject }}.</p>
+        {% endif %}
+
+        <div class="home-link">
+            <a href="{{ url_for('dashboard') }}">HOME</a>
+        </div>
+    </div>
+</body>
+</html>

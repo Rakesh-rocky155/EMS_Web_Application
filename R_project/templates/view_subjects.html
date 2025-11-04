@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Subjects</title>
+    <style>
+        body {
+            background-image: url('/static/pphoto1.png');
+            background-repeat: no-repeat;
+            background-size: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0px auto;
+            margin-top: 100px;
+            background-color: black;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: orange;
+        }
+
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input{
+            padding: 5px;
+            font-size: 12px;
+            margin: 5px;
+            border-radius: 5px;
+        }
+        button {
+            padding: 5px;
+            font-size: 12px;
+            margin: 5px;
+            background-color: #e74c3c;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        td {
+            background-color: black;
+        }
+
+        .message {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+            color: #555;
+        }
+
+        .no-subjects {
+            color: #e74c3c;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .clear-buttons {
+            text-align: center;
+            margin-top: 20px;
+            
+        }
+
+        .clear-buttons button {
+            margin: 5px;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* Add style for flash messages */
+        .flash-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        .flash-message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>View Subjects</h1>
+
+        <!-- Display Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Form for filtering subjects -->
+        <form method="POST">
+            <label>Enter Course:</label>
+            <input type="text" name="course" placeholder="Enter Course" required value="{{ course or '' }}">
+            <label>Enter Semester:</label>
+            <input type="text" name="sem" placeholder="Enter Semester" required value="{{ sem or '' }}">
+            <button type="submit">View Subjects</button>
+        </form>
+
+        {% if subjects %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Course</th>
+                        <th>Semester</th>
+                        <th>Subjects</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for course, sem, subject in subjects %}
+                        <tr>
+                            <td>{{ course }}</td>
+                            <td>{{ sem }}</td>
+                            <td>{{ subject }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="message">
+                {% if no_subjects_message %}
+                    <span class="no-subjects">{{ no_subjects_message }}</span>
+                {% else %}
+                    Enter a course and semester to view subjects.
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <!-- Clear buttons -->
+        <div class="clear-buttons">
+            <!-- Clear Specific Subject -->
+            {% if course and sem %}
+            <form method="POST" action="/clears_specific_subject">
+                <input type="hidden" name="course" value="{{ course }}">
+                <input type="hidden" name="sem" value="{{ sem }}">
+                <label>Enter Subject:</label>
+                <input type="text" name="subject" placeholder="Enter Subject" required>
+                <button type="submit">Clear Specific Subject</button>
+            </form>
+
+            <!-- Clear Branch Subjects -->
+                <form method="POST" action="/clears_branch_subjects">
+                    <input type="hidden" name="branch" value="{{ course }}">
+                    <input type="hidden" name="sem" value="{{ sem }}">
+                    <button type="submit">Clear All Subjects of Branch</button>
+                </form>
+            {% endif %}
+        </div>
+
+        <a href="/dashboard">HOME</a>
+    </div>
+</body>
+</html>

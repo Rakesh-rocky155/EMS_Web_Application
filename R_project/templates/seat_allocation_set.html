@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exam Seat Allocation Set</title>
+    <style>
+        body {
+            background-image: url('/static/images/Classroom.jpg');
+            background-size: cover;
+            text-align: center;
+        }
+        .seat_allocation-container {
+            background-color: #111;
+            color: #fff;
+            opacity: 0.8;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="seat_allocation-container">
+        <h1>Allot Seats for Examination</h1>
+        <form method="POST" action="/set_seat_allocation">
+            <label>Course:</label>
+            <input type="text" name="c" placeholder="Enter The Course" required><br><br>
+            <label>Number of students:</label>
+            <input type="text" name="ns" placeholder="Enter The Number of students" required><br><br>
+            <input type="submit" value="Submit">
+            <a href="/clear_records">Clear Records</a>
+        </form>
+    </div>
+</body>
+</html>

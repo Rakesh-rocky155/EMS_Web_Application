@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboardstyle.css') }}">
+</head>
+<body>
+    <h1>Welcome, {{ username }}</h1>
+    <div class="container">
+        <div class="row">
+            <div class="column"><a href="{{ url_for('handle_set_attendance') }}">Set Attendance</a></div>
+            <div class="column"><a href="{{ url_for('handle_view_attendance') }}">View Attendance</a></div>
+        </div>
+        <div class="row">
+            <div class="column"><a href="{{ url_for('handle_set_marks') }}">Set Marks</a></div>
+            <div class="column"><a href="{{ url_for('handle_view_marks') }}">View Marks</a></div>
+        </div>
+        <div class="row">
+            <div class="column"><a href="{{ url_for('handle_allocate_room') }}">Allocate Rooms</a></div>
+            <div class="column"><a href="{{ url_for('display_allocate_room') }}">View Rooms Allocation</a></div>
+        </div>
+        <div class="row">
+            <div class="column"><a href="{{ url_for('allot_examination_seats') }}">Allot Examination Seats</a></div>
+            <div class="column"><a href="{{ url_for('view_examination_seats') }}">View Examination Seats</a></div>
+        </div>
+        <div class="row">
+            <div class="column"><a href="{{ url_for('sets_timetable') }}">Set Timetable</a></div>
+            <div class="column"><a href="{{ url_for('view_timetable') }}">View Timetable</a></div>
+        </div>
+        <div class="row">
+            <div class="column"><a href="{{ url_for('sets_subjects') }}">Set Subjects</a></div>
+            <div class="column"><a href="{{ url_for('handle_view_subjects') }}">View Subjects</a></div>
+        </div>
+        <div class="logout"><a href="{{ url_for('logout') }}">Logout</a></div>
+    </div>
+</body>
+</html>

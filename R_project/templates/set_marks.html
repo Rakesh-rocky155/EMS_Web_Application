@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Marks</title>
+    <style>
+        body {
+            background-image: url('/static/pphoto.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+        }
+
+        .marks-container {
+            background-color: #111;
+            opacity: 0.85;
+            padding: 30px;
+            border-radius: 10px;
+            width: 360px;
+            margin: 0 auto;
+            margin-top: 100px;
+            text-align: center;
+        }
+
+        .teacher-marks-heading {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #4285F4;
+        }
+
+        .marks-form {
+            text-align: left;
+            padding: 5px;
+        }
+
+        .marks-form label {
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .marks-form input[type="text"], .marks-form select, .marks-form input[type="number"] {
+            width: 100%;
+            padding: 5px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .marks-form input[type="submit"], .marks-form input[type="reset"] {
+            background-color: #4285F4;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+
+        .marks-form input[type="submit"]:hover, .marks-form input[type="reset"]:hover {
+            background-color: #3367D6;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Flexbox for button alignment */
+        .button-container {
+            display: flex;
+            justify-content: space-between; /* Space between buttons */
+            margin-top: 15px; /* Add space above the button container */
+        }
+
+        a {
+            color: #34A853;
+            text-decoration: none;
+            margin-top: 0;
+            display: inline-block;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .flash-messages ul {
+            padding: 0;
+            list-style: none;
+        }
+
+        .flash-messages li {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .flash-messages .success {
+            color: greenyellow;
+        }
+
+        .flash-messages .danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .flash-messages .warning {
+            color: orange;
+        }
+
+        .home-link {
+            text-align: center; /* Aligns to the right */
+            margin-top: 0; /* Add space above */
+        }
+
+        @media (max-width: 600px) {
+            .marks-container {
+                width: 90%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="marks-container">
+        <h1 class="teacher-marks-heading">Set Marks</h1>
+        
+        <!-- Flash Messages -->
+        <div class="flash-messages">
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    <ul>
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <!-- Form for entering marks -->
+        <form class="marks-form" method="POST" action="{{ url_for('handle_set_marks') }}">
+            <label for="Reg_number">Register Number:</label>
+            <input type="text" name="Reg_number" placeholder="Enter student Register Number" required>
+            
+            <label for="subject">Subject:</label>
+            <input type="text" name="subject" placeholder="Enter The Subject" required>
+            
+            <label for="exam_type">Select Exam</label>
+            <select name="exam_type" id="exam_type" required>
+                <option value="">Select Exam Type</option>
+                <option value="CIE_1">CIE 1</option>
+                <option value="CIE_2">CIE 2</option>
+                <option value="Event">Event</option>
+                <option value="SEE">SEE</option>
+            </select>
+
+            <label for="marks">Enter Marks (0-100)</label>
+            <input type="number" name="marks" id="marks" placeholder="Enter Marks" min="0" max="100" required oninput="this.value = Math.max(0, Math.min(100, this.value));">
+            
+            <!-- Button container for Submit and Clear -->
+            <div class="button-container">
+                <input type="reset" value="Clear">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+        
+        <!-- HOME Link aligned to the right -->
+        <div class="home-link">
+            <a href="{{ url_for('dashboard') }}">HOME</a>
+        </div>
+    </div>
+</body>
+</html>

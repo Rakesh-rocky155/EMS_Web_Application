@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            padding: 20px;
+        }
+
+        .confirmation-message {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #111;
+            color: #fff;
+            opacity: 0.8;
+            padding: 20px;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(5, 5, 5, 5);
+            text-align: left;
+        }
+
+        a {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #111;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="confirmation-message">
+        <h2><u>Selected Subjects</u></h2>
+        {% set counter = 1 %}
+        {% for subject in subjects %}
+            <p>{{ counter }}. {{ subject }}</p>
+            {% set counter = counter + 1 %}
+        {% endfor %}
+        <h1>Payment Confirmed</h1>
+        <p>{{ message }}</p>  <!-- Display the registration message -->
+        <p>Total fee: {{ fee }}</p>
+    </div>
+    <center><a href="{{ url_for('student_info') }}">Home</a></center>
+</body>
+</html>

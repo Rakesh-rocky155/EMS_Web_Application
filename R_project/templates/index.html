@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marks Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <h1>Marks Management</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form action="/add_mark" method="POST">
+        <label for="mark_id">Mark ID:</label>
+        <input type="text" name="mark_id" required>
+        <label for="mark_value">Mark Value:</label>
+        <input type="text" name="mark_value" required>
+        <button type="submit">Add Mark</button>
+    </form>
+
+    <form action="/update_mark" method="POST">
+        <label for="mark_id">Mark ID:</label>
+        <input type="text" name="mark_id" required>
+        <label for="mark_value">New Mark Value:</label>
+        <input type="text" name="mark_value" required>
+        <button type="submit">Update Mark</button>
+    </form>
+
+</body>
+</html>

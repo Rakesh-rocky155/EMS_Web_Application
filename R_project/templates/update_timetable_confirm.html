@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Timetable</title>
+</head>
+<body>
+    <script>
+        if (confirm('Time already exists for this course. Do you want to update it?')) {
+            window.location.href = "{{ url_for('update_timetable') }}";
+        } else {
+            window.location.href = "{{ url_for('set_timetable') }}";
+        }
+    </script>
+</body>
+</html>

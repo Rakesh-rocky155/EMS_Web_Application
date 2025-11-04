@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Registration</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Exam Registration</h2>
+        <p>Fine for low attendance: Rs {{ fee }}</p>
+
+        <form method="POST">
+            <div>
+                <label>Select Subjects:</label><br>
+                {% for subject in subjects %}
+                    <input type="checkbox" name="subjects" value="{{ subject[0] }}"> {{ subject[0] }}<br>
+                {% endfor %}
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</body>
+</html>

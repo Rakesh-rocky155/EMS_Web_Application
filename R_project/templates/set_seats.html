@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seat Allocation</title>
+    <style>
+        body {
+            background-image: url('/static/pphoto1.png');
+            background-repeat: no-repeat;
+            background-size: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            padding: 10px;
+            background-color: #151515;
+            border-radius: 8px;
+            margin-top: 100px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: white;
+            margin-bottom: 10px;
+        }
+        .flash-message {
+            color: green;
+            font-size: 1.1em;
+            margin: 10px;
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 1em;
+            color: white;
+        }
+        input[type="text"],
+        input[type="number"],
+        select {
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .view_seats-link {
+            text-align: center;
+            display: block;
+            margin-top: 20px;
+            color: #0066cc;
+            text-decoration: none;
+        }
+        .view_seats-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        function showForm() {
+            var selectOption = document.getElementById("allocation_type").value;
+            var individualForm = document.getElementById("individual_seat_form");
+            var courseForm = document.getElementById("course_seat_form");
+
+            if (selectOption === "individual") {
+                individualForm.style.display = "block";
+                courseForm.style.display = "none";
+            } else if (selectOption === "course") {
+                individualForm.style.display = "none";
+                courseForm.style.display = "block";
+            } else {
+                individualForm.style.display = "none";
+                courseForm.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Seat Allocation</h1>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash-message">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <label for="allocation_type">Choose Allocation Type:</label>
+        <select id="allocation_type" onchange="showForm()">
+            <option value="">Select...</option>
+            <option value="individual">Allocate Individual Seat</option>
+            <option value="course">Allocate Seats for a Course</option>
+        </select>
+
+        <div id="individual_seat_form" style="display:none;">
+            <h2>Allocate Individual Seat</h2>
+            <form action="/allot_individual_seat" method="POST">
+                <label for="Reg_number">Registration Number:</label>
+                <input type="text" id="Reg_number" name="Reg_number" placeholder="Enter Registration Number" required>
+
+                <label for="Classroom_number">Classroom Number:</label>
+                <input type="text" id="Classroom_number" name="Classroom_number" placeholder="Enter Classroom Number" required>
+
+                <label for="Seat_number">Seat Number:</label>
+                <input type="number" id="Seat_number" name="Seat_number" placeholder="Enter Seat Number" required>
+
+                <input type="submit" value="Allocate Seat">
+            </form>
+        </div>
+
+        <div id="course_seat_form" style="display:none;">
+            <h2>Allocate Seats for Courses</h2>
+            <form action="/allot_multiple_course_seat" method="POST">
+                <h3>First Course</h3>
+                <label for="First_Course_name">Course Name:</label>
+                <input type="text" id="First_Course_name" name="First_Course_name" placeholder="Enter First Course Name" required>
+
+                <label for="Number_of_Students_First">Number of Students:</label>
+                <input type="number" id="Number_of_Students_First" name="Number_of_Students_First" placeholder="Enter Number of Students" required>
+
+                <label for="Starting_Reg_Number_First">Starting Registration Number:</label>
+                <input type="text" id="Starting_Reg_Number_First" name="Starting_Reg_Number_First" placeholder="Enter Starting Registration Number" required>
+
+                <label for="Classroom_Number_First">Classroom Number:</label>
+                <input type="text" id="Classroom_Number_First" name="Classroom_Number_First" placeholder="Enter Classroom Number" required>
+
+                <h3>Second Course</h3>
+                <label for="Second_Course_name">Course Name:</label>
+                <input type="text" id="Second_Course_name" name="Second_Course_name" placeholder="Enter Second Course Name" required>
+
+                <label for="Number_of_Students_Second">Number of Students:</label>
+                <input type="number" id="Number_of_Students_Second" name="Number_of_Students_Second" placeholder="Enter Number of Students" required>
+
+                <label for="Starting_Reg_Number_Second">Starting Registration Number:</label>
+                <input type="text" id="Starting_Reg_Number_Second" name="Starting_Reg_Number_Second" placeholder="Enter Starting Registration Number" required>
+
+                <label for="Classroom_Number_Second">Classroom Number:</label>
+                <input type="text" id="Classroom_Number_Second" name="Classroom_Number_Second" placeholder="Enter Classroom Number" required>
+
+                <input type="submit" value="Allocate Course Seats">
+            </form>
+        </div>
+
+        <a class="view_seats-link" href="/dashboard">HOME</a>
+    </div>
+
+</body>
+</html>

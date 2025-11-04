@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exam Seat Allocation Display</title>
+    <style>
+        body {
+            background-image: url('/static/images/Classroom2.jpg');
+            background-size: cover;
+            text-align: center;
+        }
+        table, th, td {
+            border: 1px solid black;
+            background-color: #111;
+            color: #fff;
+        }
+        input {
+            cursor: pointer;
+        }
+        a {
+            font-size: 20px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="color:#fff;">Exam Seat Allocation</h1>
+    <p style='color:#fff;'> Classroom Number: {{ current_page }} </p>
+
+    <div id="pagination">
+        {% if current_page > 1 %}
+            <a href="?page={{ current_page - 1 }}">←</a>
+        {% endif %}
+
+        {% for i in range(1, total_pages + 1) %}
+            <a href="?page={{ i }}" {% if i == current_page %} class="active" {% endif %}> {{ i }} </a>
+        {% endfor %}
+
+        {% if current_page < total_pages %}
+            <a href="?page={{ current_page + 1 }}">→</a>
+        {% endif %}
+    </div>
+
+    <table>
+        <tr>
+            {% for seat in seat_array %}
+                <td><input type="button" value="{{ seat }}"></td>
+            {% endfor %}
+        </tr>
+    </table>
+</body>
+</html>

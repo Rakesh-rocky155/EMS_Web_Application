@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Set Timetable</title>
+    <style>
+        body {
+            background-image: url('/static/pphoto.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+        }
+
+        .timetable-container {
+            background-color: #111;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 25px 25px rgba(5, 5, 5, 0.5);
+            width: 360px;
+            color: #fff;
+            margin: 0 auto;
+            margin-top: 100px;
+            opacity: 0.9;
+            text-align: center;
+        }
+
+        .timetable-heading {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #4285F4;
+        }
+
+        .timetable-form {
+            text-align: left;
+        }
+
+        .timetable-form label {
+            color: rgb(35, 216, 207);
+            font-size: 16px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .timetable-form input[type="text"],
+        .timetable-form input[type="date"],
+        .timetable-form input[type="time"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #dddddd;
+            border-radius: 3px;
+            margin-bottom: 15px;
+        }
+
+        .timetable-form input[type="submit"] {
+            background-color: #4285F4;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 3px;
+            width: 100%;
+        }
+
+        .timetable-form input[type="submit"]:hover {
+            background-color: #357AE8;
+        }
+
+        .action-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .action-links a {
+            background-color: #ff4c4c;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 3px;
+        }
+
+        .action-links a#home-link {
+            background-color: #32CD32;
+        }
+
+        .action-links a:hover {
+            background-color: #ff1c1c;
+        }
+
+        .action-links a#home-link:hover {
+            background-color: #28a828;
+        }
+
+        .message-container {
+            text-align: center;
+            margin-top: 20px;
+            color: #32CD32;
+        }
+
+        .message-container ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 10px auto;
+            font-size: 18px;
+        }
+
+        .message-container li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="timetable-container">
+        <h1 class="timetable-heading">Set Timetable</h1>
+        <form class="timetable-form" method="POST" action="{{ url_for('sets_timetable') }}">
+            <label>Enter Course:</label>
+            <input type="text" name="course" placeholder="Enter course name" required>
+            <label>Enter Semester:</label>
+            <input type="text" name="sem" placeholder="Enter semester" required>
+            <label>Select Start Date:</label>
+            <input type="date" name="start_date" required>
+            <label>Select Start Time:</label>
+            <input type="time" name="start_time" required>
+            <input type="submit" value="Set Timetable">
+        </form>
+
+        <div class="action-links">
+            <a href="{{ url_for('sets_timetable') }}">Clear</a>
+            <a id="home-link" href="{{ url_for('dashboard') }}">HOME</a>
+        </div>
+    </div>
+
+    <div class="message-container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>

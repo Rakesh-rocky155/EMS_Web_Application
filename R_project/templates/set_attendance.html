@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='set_attendance_style.css') }}">
+    <title>Set Student Attendance</title>
+</head>
+<body>
+    <div class="attendance-container">
+        <h1 class="teacher-attendance-heading">Set Student Attendance</h1>
+
+        <!-- Flash messages for form validation -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul>
+                    {% for category, message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Form for setting attendance -->
+        <form class="set-attendance-form" method="POST" action="{{ url_for('handle_set_attendance') }}">
+            <label for="student_Reg_No">Student Registration Number:</label>
+            <input type="text" name="student_Reg_No" placeholder="Enter Student Registration Number" required>
+
+            <label>Student Name:</label>
+            <input type="text" name="student_name" placeholder="Enter Student Name" required>
+
+            <label>Subject:</label>
+            <input type="text" name="subject" placeholder="Enter Subject" required> <!-- Corrected here -->
+
+            <label>Number Of Classes Attended:</label>
+            <input type="number" name="attended_classes" placeholder="Enter Number Of Classes Attended" required>
+
+            <label>Total Number Of Classes:</label>
+            <input type="number" name="total_classes" placeholder="Enter Total Number Of Classes" required>
+
+            <input type="submit" value="Submit">
+        </form>
+
+        <a href="{{ url_for('dashboard') }}">HOME</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Seat Update</title>
+    <style>
+        /* Add your styles here */
+    </style>
+</head>
+<body>
+    <div class="seat_allocation-container">
+        <h1>Update Seat Allocation</h1>
+        <p>Seat already allocated for Registration Number <strong>{{ reg_number }}</strong>.</p>
+        <p>Current Classroom: <strong>{{ classroom_number }}</strong></p>
+        <p>Current Seat: <strong>{{ seat_number }}</strong></p>
+        <p>Do you want to update the allocation?</p>
+
+        <form action="/update_seat" method="POST">
+            <input type="hidden" name="Reg_number" value="{{ reg_number }}">
+            <label for="classroom_number">New Classroom Number:</label>
+            <input type="text" id="classroom_number" name="Classroom_number" required>
+        
+            <label for="seat_number">New Seat Number:</label>
+            <input type="text" id="seat_number" name="Seat_number" required>
+        
+            <input type="submit" value="Update Seat">
+        </form>
+
+        <a href="/set_seats">Cancel</a>
+    </div>
+</body>
+</html>

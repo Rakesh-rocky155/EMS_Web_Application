@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Course Subjects</title>
+    <style>
+        body {
+            background-image: url('/static/pphoto1.png');
+            background-repeat: no-repeat;
+            background-size: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0 auto;
+        }
+        .input-container {
+            background-color: #111;
+            color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            width: 400px;
+            margin-top: 100px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            max-height: 80vh; /* Adjust the height to fit */
+            overflow-y: auto;
+        }
+        input, button {
+            border-radius: 5px;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+        }
+        button {
+            background-color: #4285F4;
+            width: 105%;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #3367D6;
+        }
+        .home-link {
+            padding-top: 15px;
+            text-align: center;
+        }
+        .flash-message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .flash-message.success {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .flash-message.error {
+            background-color: #F44336;
+            color: white;
+        }
+        .flash-message.warning {
+            background-color: #FF9800;
+            color: white;
+        }
+    </style>    
+</head>
+<body>
+    <div class="input-container">
+        <h1>Set Course Subjects</h1>
+
+        <!-- Display flash messages here -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <label for="course">Enter Course Name:</label>
+            <input type="text" id="course" name="c" required>
+            <label for="course">Enter Semester:</label>
+            <input type="text" id="course" name="sem" required>
+            <label for="subjectCount">Enter Number of Subjects:</label>
+            <input type="number" id="subjectCount" name="subjectCount" min="1" required>
+            <button type="button" onclick="createTextboxes()">Add Subjects</button>
+            <div id="subjectContainer"></div>
+            <button type="submit">Submit</button>
+        </form>
+
+        <div class="home-link">
+            <a href="{{ url_for('dashboard') }}">HOME</a>
+        </div>
+    </div>
+
+    <script>
+        function createTextboxes() {
+            const subjectCount = document.getElementById('subjectCount').value;
+            const container = document.getElementById('subjectContainer');
+            container.innerHTML = '';
+            for (let i = 1; i <= subjectCount; i++) {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.name = 'subject' + i;
+                input.placeholder = 'Enter subject ' + i;
+                input.required = true;
+                container.appendChild(input);
+            }
+        }
+    </script>
+</body>
+</html>

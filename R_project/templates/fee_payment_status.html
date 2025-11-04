@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fee Payment Status</title>
+    <style>
+        body {
+            background-image: url('static/images/Background Images/Classroom2.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border: 0.5px solid black;
+        }
+        th, td {
+            background-color: #111;
+            opacity: 0.8;
+            color: #fff;
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            border: 0.5px solid black;
+            width: 10%;
+        }
+        a {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #111;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .flash-message {
+            color: rgb(0, 255, 72);  /* Change this color as needed */
+            font-weight: bold;
+        }
+        .home-link {
+            text-align: center; /* Aligns to the right */
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Exam Fee Status</h1>
+    
+    <!-- Flash messages section at the top of the page -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash-message">
+          <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    {% endwith %}
+    
+    <div>
+        <table>
+            <tr>
+                <th>Student Name</th>
+                <th>Student Register Number</th>
+                <th>Course</th>
+                <th>Semester</th>
+                <th>Payment Status</th>
+            </tr>
+            {% for student in fee_status %}
+            <tr>
+                <td>{{ student[0] }}</td>
+                <td>{{ student[1] }}</td>
+                <td>{{ student[2] }}</td>
+                <td>{{ student[3] }}</td>
+                <td>{{ student[4] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="{{ url_for('clears_fee_payment') }}">Clear Current Payment Status</a>
+    </div>
+    <div class="home-link">
+        <a href="{{ url_for('dashboard') }}">HOME</a>
+    </div>
+</body>
+</html>

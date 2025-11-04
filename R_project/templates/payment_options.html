@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Options</title>
+    <style>
+        body {
+            background-image: url('/static/pphoto.png');
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .payment-container {
+            background-color: #111;
+            padding: 50px;
+            box-shadow: 0 2px 4px rgba(1, 1, 1, 1);
+            width: 560px;
+            color:#fff;
+            opacity:0.8;
+            margin: 50px auto; /* Reduced margin from 200px to 100px */
+            text-align: center;
+        }
+
+        .payment-methods {
+            display: flex;
+            justify-content: center;
+        }
+
+        .payment-option {
+            cursor: pointer;
+            margin: 0 10px;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            border: 2px;
+            border-style: solid;
+        }
+
+        .payment-option:hover {
+            background-color: #627b82;
+        }
+
+        input[type="submit"]{
+            cursor: pointer;
+            margin: 0 10px;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            border: 2px;
+            border-style: solid;
+            width: 50%;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #2eac7e;
+        }
+
+        .dropdown {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .dropdown-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            padding-bottom: 10px;
+        }
+
+        .dropdown input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        .show-dropdown {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <form action="/process_payment" method="POST">
+            <h1>Payment Options</h1>
+            <div class="payment-methods">
+                <div class="payment-option" onclick="toggleDropdown('card')">
+                    Debit OR Credit Card
+                    <br>
+                    <img src="{{ url_for('static', filename='Images/Icons/VISA.png') }}" alt="VISA">
+                    <img src="{{ url_for('static', filename='Images/Icons/MASTERCARD.png') }}" alt="Master Card">
+                    <img src="{{ url_for('static', filename='Images/Icons/AMEX.png') }}" alt="Amex">
+                    <img src="{{ url_for('static', filename='Images/Icons/DINERS.png') }}" alt="Diners">
+                </div>
+                <div class="payment-option" onclick="toggleDropdown('upi')">
+                    UPI Payment
+                    <br>
+                    <img src="{{ url_for('static', filename='Images/Icons/BHIM.png') }}" alt="BHIM">
+                    <img src="{{ url_for('static', filename='Images/Icons/GPAY.png') }}" alt="Gpay">
+                </div>
+            </div>
+            <div class="dropdown" id="card">
+                <div class="dropdown-label">Enter card details:</div>
+                <input type="text" placeholder="Card Number" name="cn">
+                <input type="text" placeholder="Expiration Date" name="ed">
+                <input type="text" placeholder="CVV" name="cvv">
+                <input type="text" placeholder="First Name" name="fn">
+                <input type="text" placeholder="Last Name" name="ln">
+                <input type="submit" value="Pay">
+            </div>
+            <div class="dropdown" id="upi">
+                <div class="dropdown-label">Enter UPI details:</div>
+                <input type="text" placeholder="UPI ID" name="upi">
+                <input type="submit" value="Pay">
+            </div>
+        </form>
+        {% if error %}
+            <p style="color: red;">Please enter all the fields</p>
+        {% endif %}
+    </div>
+    <script>
+        function toggleDropdown(paymentType) {
+            const dropdowns = document.querySelectorAll('.dropdown');
+            dropdowns.forEach(dropdown => {
+                if (dropdown.id === paymentType) {
+                    dropdown.classList.add('show-dropdown');
+                } else {
+                    dropdown.classList.remove('show-dropdown');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
